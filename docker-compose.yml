@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  sampledockerizednetcorewithpostgresql:
+    image: ${DOCKER_REGISTRY}sampledockerizednetcorewithpostgresql
+    build:
+      context: .
+      dockerfile: SampleDockerizedNetCoreWithPostgreSql/Dockerfile
