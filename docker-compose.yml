@@ -1,8 +1,32 @@
 version: '3.4'
-
 services:
+  db:
+    image: postgres:10.5
+    restart: always
+    ports:
+    - "5432:5432"
+    environment:
+      POSTGRES_DB: SampleBloggingDB
+      POSTGRES_PASSWORD: skipper5811465
+    volumes:
+    - "postgres-data-auth:/var/lib/postgresql/data"
+
   sampledockerizednetcorewithpostgresql:
     image: ${DOCKER_REGISTRY}sampledockerizednetcorewithpostgresql
     build:
       context: .
       dockerfile: SampleDockerizedNetCoreWithPostgreSql/Dockerfile
+    restart: always
+    ports:
+    - "5001:80"
+    depends_on:
+    - db
+
+  adminer:
+    image: adminer:4
+    restart: always
+    ports:
+    - "9999:8080"
+volumes:
+  postgres-data-auth:
+    driver: local
